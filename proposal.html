@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anahad Healing — Website &amp; AI Healing Companion · Proposal</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #2b2b2b; background: #fdfaf6; line-height: 1.7; font-size: 17px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { color: #1f4f48; font-weight: normal; }
+  a { color: #2c665e; }
+  img { max-width: 100%; display: block; }
+
+  header.top { text-align: center; padding: 56px 24px 40px; border-bottom: 1px solid #e6ded2; }
+  header.top .brand { font-size: 22px; letter-spacing: 6px; color: #1f4f48; font-weight: bold; }
+  header.top .brand small { display: block; font-size: 11px; letter-spacing: 4px; color: #a4583c; margin-top: 4px; }
+  header.top h1 { font-size: 34px; line-height: 1.25; margin: 22px auto 14px; max-width: 16ch; }
+  header.top p { font-size: 18px; color: #555; max-width: 30rem; margin: 0 auto; }
+  header.top .for { margin-top: 22px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #888; }
+
+  section { padding: 44px 0; border-bottom: 1px solid #eee4d8; }
+  section h2 { font-size: 27px; margin-bottom: 6px; }
+  section .kicker { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #a4583c; margin-bottom: 8px; }
+  section p { margin-bottom: 14px; }
+  section p:last-child { margin-bottom: 0; }
+
+  figure { margin: 22px 0; }
+  figure img { border: 1px solid #ccc; border-radius: 4px; }
+  figcaption { font-size: 14px; color: #777; font-style: italic; text-align: center; margin-top: 8px; }
+
+  .steps { margin: 18px 0; padding: 0; list-style: none; counter-reset: s; }
+  .steps li { padding: 14px 0 14px 52px; position: relative; border-bottom: 1px solid #eee4d8; }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 14px;
+    width: 34px; height: 34px; background: #1f4f48; color: #fff; border-radius: 50%;
+    text-align: center; line-height: 34px; font-size: 16px; }
+  .steps li b { color: #1f4f48; }
+
+  ul.list { margin: 12px 0 12px 22px; }
+  ul.list li { margin-bottom: 7px; }
+
+  .price { border: 2px solid #1f4f48; border-radius: 6px; margin: 18px 0; }
+  .price .r { display: flex; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid #e3ddcf; }
+  .price .r:last-child { border-bottom: none; }
+  .price .r .v { font-weight: bold; color: #1f4f48; }
+  .price .r .v .strike { font-weight: normal; color: #999; text-decoration: line-through; margin-right: 8px; }
+  .price .free { color: #2c665e; }
+  .price .total { background: #1f4f48; }
+  .price .total .l, .price .total .v { color: #fff; font-weight: bold; font-size: 19px; }
+  .price small { color: #777; font-size: 13px; }
+
+  .roi { background: #f4f7f4; border-left: 4px solid #2c665e; padding: 18px 22px; margin: 20px 0; }
+  .roi b { color: #1f4f48; }
+
+  /* breathing widget (live) */
+  .breath-demo { background: #2c3327; border-radius: 8px; padding: 34px 24px; text-align: center; color: #f3efe7; margin: 22px 0; }
+  .breath-demo .circle { width: 130px; height: 130px; border-radius: 50%; margin: 8px auto 18px;
+    background: radial-gradient(circle at 50% 40%, #5f7d63, #2c4a3f);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 17px;
+    transition: transform 4s ease-in-out; }
+  .breath-demo .circle.in { transform: scale(1.45); }
+  .breath-demo .phase { font-size: 22px; letter-spacing: 1px; min-height: 30px; }
+  .breath-demo .count { font-size: 14px; color: #b7c4b2; margin-top: 4px; }
+  .breath-demo .controls { margin-top: 18px; }
+  .breath-demo button { font-family: inherit; font-size: 14px; background: #a4583c; color: #fff;
+    border: none; padding: 9px 22px; border-radius: 30px; cursor: pointer; margin: 0 4px; }
+  .breath-demo .methods { margin-top: 14px; }
+  .breath-demo .methods button { background: transparent; border: 1px solid #6f7d68; color: #cfd8c9;
+    padding: 6px 14px; font-size: 13px; margin: 3px; }
+  .breath-demo .methods button.active { background: #6f7d68; color: #fff; }
+  .breath-demo .hint { font-size: 13px; color: #9fae98; margin-top: 14px; font-style: italic; }
+
+  .close { text-align: center; padding: 48px 0; }
+  .close p.big { font-size: 22px; color: #1f4f48; max-width: 30rem; margin: 0 auto 16px; }
+  .btn { display: inline-block; background: #a4583c; color: #fff; text-decoration: none;
+    padding: 13px 30px; border-radius: 30px; font-size: 15px; letter-spacing: 1px; margin-top: 10px; }
+
+  footer { background: #2c3327; color: #cfd8c9; text-align: center; padding: 30px 24px; font-size: 14px; }
+  footer .q { font-style: italic; font-size: 17px; color: #f3efe7; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">ANAHAD<small>HEALING</small></div>
+  <h1>Your website, and your own AI Healing Companion</h1>
+  <p>A calm digital home that listens to people the moment they arrive — and gently guides them toward healing with you.</p>
+  <div class="for">A proposal for Paramjit &amp; Daljit · Anahad Healing</div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="kicker">The idea</div>
+    <h2>A website that speaks, not just sits there</h2>
+    <p>Most healing websites are silent brochures. Yours will <b>speak</b> — meeting each visitor with warmth, understanding their pain, offering real first comfort, and softly inviting them into your care.</p>
+    <p>It works at 2 a.m., when anxious people are actually searching for help. It never sleeps, never judges, and never lets a quiet visitor slip away unseen.</p>
+  </section>
+
+  <section>
+    <div class="kicker">1 · The website</div>
+    <h2>A calm, beautiful first impression</h2>
+    <p>Designed entirely in your brand — soft, grounding, unmistakably Anahad. Every page editable by you.</p>
+    <figure>
+      <img src="http://www.edrafter.in/wp-content/uploads/2026/06/ChatGPT-Image-Jun-17-2026-02_32_33-PM.png" alt="Homepage design" />
+      <figcaption>Homepage — with the AI healing search bar built into the hero</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="kicker">2 · The heart — Anahad AI</div>
+    <h2>An AI that listens, helps, and guides</h2>
+    <p>The visitor types or speaks what's troubling them. What happens next is the whole product:</p>
+    <ol class="steps">
+      <li><b>It welcomes them gently.</b> "You're in a safe space. I'm here to listen." No forms, no pressure.</li>
+      <li><b>It understands, and gives real comfort.</b> The AI reflects what they're feeling and offers a genuine first insight — in Paramjit's voice. Trust is built before anything is offered.</li>
+      <li><b>It matches them to the right healing.</b> Anxiety, overthinking, sleeplessness, relationship pain — it understands and recommends the right programme, the way you would.</li>
+      <li><b>It invites them to you.</b> Softly, toward a free discovery call and the right programme. The lead flows straight into your Systeme.io.</li>
+    </ol>
+    <figure>
+      <img src="http://www.edrafter.in/wp-content/uploads/2026/06/ChatGPT-Image-Jun-17-2026-02_32_28-PM.png" alt="AI companion design" />
+      <figcaption>Anahad AI — the healing conversation and programme guidance</figcaption>
+    </figure>
+    <p>Visitors can <b>speak or type</b>, whichever feels easier. And the AI is built with care at its core: it never diagnoses or gives medical advice, and if someone is in real distress it gently pauses and points them to professional help — protecting your clients and your name.</p>
+  </section>
+
+  <section>
+    <div class="kicker">A calming signature</div>
+    <h2>The conscious breathing widget — try it now</h2>
+    <p>On every page, a gentle breathing guide is one tap away. Follow the circle below — this is the real thing, working:</p>
+
+    <div class="breath-demo">
+      <div class="circle" id="bcircle">breathe</div>
+      <div class="phase" id="bphase">Ready when you are</div>
+      <div class="count" id="bcount"></div>
+      <div class="controls">
+        <button id="bstart">Begin</button>
+        <button id="bstop">Stop</button>
+      </div>
+      <div class="methods">
+        <button data-m="444" class="active">4-4-4 Calm</button>
+        <button data-m="478">4-7-8 Relax</button>
+        <button data-m="4444">Box 4-4-4-4</button>
+      </div>
+      <div class="hint">This is included free with your website — our gift to Anahad.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">3 · The blog</div>
+    <h2>A home for your wisdom</h2>
+    <p>So your insights reach people through search — and quietly bring new visitors to the AI, every day.</p>
+    <figure>
+      <img src="http://www.edrafter.in/wp-content/uploads/2026/06/ChatGPT-Image-Jun-17-2026-02_32_43-PM.png" alt="Blog design" />
+      <figcaption>Blog and resources — SEO-ready, with "Ask Anahad AI" built into the sidebar</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="kicker">Why it's worth it</div>
+    <h2>What actually goes into building this</h2>
+    <p>This isn't a template. It's a custom system, built from scratch:</p>
+    <ul class="list">
+      <li><b>The website &amp; blog</b> — premium theme, 7-8 pages hand-built in your brand on Elementor (editable by you), plus a search-ready blog and SEO setup.</li>
+      <li><b>The custom AI app</b> — a fully designed chat experience, not a plug-in bot, connected securely to OpenAI, with voice input. This is the bulk of the work.</li>
+      <li><b>The AI's "brain"</b> — carefully teaching it Paramjit's voice, therapies, packages, and the safe, value-first way it must speak — tuned until it feels like you.</li>
+      <li><b>Your control dashboard</b> — read every conversation, see every lead, edit your packages and prices yourself, no developer needed.</li>
+      <li><b>A dedicated landing page</b> — a focused page for a campaign or offer of your choosing.</li>
+      <li><b>Systeme.io integration</b> — every lead flows into your system, tagged, ready for your automations.</li>
+      <li><b>Rock-solid AWS hosting &amp; security</b> — your site on Amazon Web Services (Lightsail), with an automated snapshot/backup system, free SSL (HTTPS) and security hardening. Included free.</li>
+      <li><b>The breathing widget</b> — included free.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="kicker">The investment</div>
+    <h2>Everything, for one fair price</h2>
+    <div class="price">
+      <div class="r"><span class="l">Website &amp; Blog</span><span class="v">₹65,000</span></div>
+      <div class="r"><span class="l">AI Healing Companion <small>(custom app, voice, dashboard, brain)</small></span><span class="v">₹1,25,000</span></div>
+      <div class="r"><span class="l">Conscious Breathing Widget <small>(our gift)</small></span><span class="v"><span class="strike">₹20,000</span><span class="free">Free</span></span></div>
+      <div class="r"><span class="l">Dedicated Landing Page</span><span class="v">₹2,500</span></div>
+      <div class="r"><span class="l">Backend &amp; Systeme.io Integration</span><span class="v">₹25,000</span></div>
+      <div class="r"><span class="l">AWS Hosting &amp; Security <small>(our gift)</small></span><span class="v free">Free</span></div>
+      <div class="r total"><span class="l">Total one-time investment</span><span class="v">₹2,17,500</span></div>
+    </div>
+    <p style="font-size:15px;color:#555;">Plus <b>one full month of free changes</b> after launch, including <b>4 one-hour meetings</b> for training and refinement. Paid support is optional and only begins after.</p>
+
+    <div class="roi">
+      <p style="margin:0;">One healing programme is <b>₹14,999</b>. If your AI brings just <b>one extra client a month</b>, it has more than paid for itself — and then it keeps working, every day, forever.</p>
+    </div>
+  </section>
+
+  <div class="close">
+    <p class="big">This is more than a website. It's a way for your healing to reach people the moment they need it — and to bring the right ones gently to your door.</p>
+    <p style="color:#666;">I'd be honoured to build it for Anahad. Whenever you're ready, we begin.</p>
+    <a class="btn" href="mailto:ayush@edrafter.in">Let's begin</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="q">By working on multiple levels, we can create lasting and transformative change.</div>
+  <div style="color:#f3efe7;margin-bottom:8px;">Ayush Gupta — Co-Founder &amp; CTO, eDrafter.in (India's Best Documentation Company) · Founder, ZappLegal (Legal Industry Revolution) · since last 10 years</div>
+  ayush@edrafter.in · +91 98736 64721 · For Anahad Healing · June 2026
+</footer>
+
+<script>
+(function(){
+  var methods = {
+    '444':  { name:'4-4-4 Calm',   steps:[['Breathe in',4,true],['Hold',4,null],['Breathe out',4,false]] },
+    '478':  { name:'4-7-8 Relax',  steps:[['Breathe in',4,true],['Hold',7,null],['Breathe out',8,false]] },
+    '4444': { name:'Box Breathing',steps:[['Breathe in',4,true],['Hold',4,null],['Breathe out',4,false],['Hold',4,null]] }
+  };
+  var cur='444', running=false, t=null;
+  var circle=document.getElementById('bcircle'), phase=document.getElementById('bphase'), count=document.getElementById('bcount');
+
+  function run(){
+    var steps=methods[cur].steps, i=0;
+    function next(){
+      if(!running) return;
+      var s=steps[i], label=s[0], secs=s[1], inhale=s[2];
+      phase.textContent=label;
+      circle.style.transitionDuration=secs+'s';
+      if(inhale===true){ circle.classList.add('in'); circle.textContent='in'; }
+      else if(inhale===false){ circle.classList.remove('in'); circle.textContent='out'; }
+      else { circle.textContent='hold'; }
+      var c=secs;
+      count.textContent=c;
+      var iv=setInterval(function(){ c--; count.textContent=c>0?c:''; if(c<=0)clearInterval(iv); },1000);
+      t=setTimeout(function(){ i=(i+1)%steps.length; next(); }, secs*1000);
+    }
+    next();
+  }
+  document.getElementById('bstart').onclick=function(){ if(running)return; running=true; run(); };
+  document.getElementById('bstop').onclick=function(){ running=false; clearTimeout(t); phase.textContent='Paused'; count.textContent=''; circle.classList.remove('in'); circle.textContent='breathe'; };
+  document.querySelectorAll('.methods button').forEach(function(b){
+    b.onclick=function(){
+      document.querySelectorAll('.methods button').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active'); cur=b.getAttribute('data-m');
+      running=false; clearTimeout(t); phase.textContent='Ready when you are'; count.textContent=''; circle.classList.remove('in'); circle.textContent='breathe';
+    };
+  });
+})();
+</script>
+</body>
+</html>
